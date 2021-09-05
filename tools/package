@@ -1,0 +1,12 @@
+#!/bin/bash
+
+readonly ext_name="json-bookmarks"
+readonly ext_version="v1.0.0"
+
+mkdir --parents out/ \
+  && zip \
+    --recurse-paths \
+    --filesync \
+    out/${ext_name}-${ext_version}.zip \
+    * \
+    --exclude .git tools/\* icon/src/\* out/\* TODO.md

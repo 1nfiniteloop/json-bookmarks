@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    <link rel="stylesheet" href="third_party/bootstrap-5.1.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="BookmarkTree.css">
+    <script type="application/javascript" src="third_party/bootstrap-5.1.0-dist/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="third_party/FileSaver.js-2.0.4/dist/FileSaver.js"></script>
+    <script type="application/javascript" src="third_party/browser-polyfill.min.js"></script>
+    <script type="module" src="bookmarks.js"></script>
+  </head>
+  <body>
+    <main style="padding: 20px;">
+      <h1><img src="icon/96.png">Json bookmarks</h1>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <button class="nav-link" id="export-tab" data-bs-toggle="tab" data-bs-target="#export" type="button">Export</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">Import</button>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade tree" id="import">
+          <button id="btn-import" class="btn btn-primary">Import selected</button>
+        </div>
+        <div class="tab-pane fade tree" id="export">
+          <button id="btn-export" class="btn btn-primary">Export selected</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

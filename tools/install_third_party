@@ -1,0 +1,60 @@
+#!/bin/bash
+
+readonly third_party="third_party"
+
+__pushd()
+{
+  pushd "${1}" > /dev/null
+}
+
+__popd()
+{
+  popd > /dev/null
+}
+
+__install_polyfill()
+{
+  echo "Installing browser polyfill"
+  __pushd ${third_party} \
+    && curl \
+      --silent \
+      --location \
+      --remote-name \
+      https://unpkg.com/webextension-polyfill@0.8.0/dist/browser-polyfill.min.js \
+    && __popd
+}
+
+__install_filesaver()
+{
+  echo "Installing filesaver"
+  curl \
+    --silent \
+    --location \
+    https://github.com/eligrey/FileSaver.js/archive/refs/tags/v2.0.4.tar.gz \
+    |tar -xz -C ${third_party} FileSaver.js-2.0.4/dist
+}
+
+__install_bootstrap()
+{
+  echo "Installing bootstrap"
+  __pushd ${third_party} \
+    && curl \
+      --silent \
+      --location \
+      --remote-name \
+      https://github.com/twbs/bootstrap/releases/download/v5.1.0/bootstrap-5.1.0-dist.zip \
+    && unzip -q bootstrap-*-dist.zip \
+    && rm bootstrap-*-dist.zip \
+    && __popd
+}
+
+main()
+{
+  mkdir --parents ${third_party} \
+    && __install_polyfill \
+    && __install_filesaver \
+    && __install_bootstrap \
+    && echo "Done!"
+}
+
+main
