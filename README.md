@@ -27,13 +27,13 @@ with Chrome:
     sed -r 's|"path": "/Bookmarks Toolbar(.*)"$|"path": "/Bookmarks bar\1"|g; s|"path": "/Bookmarks Menu(.*)"$|"path": "/Other bookmarks\1"|g' \
       bookmarks-mozilla.json > bookmarks-chrome.json
 
-### Build and develop
+## Build and develop
 
 1. Install third party libraries with `tools/install_third_party`.
 2. Load the extension locally from Mozilla Firefox:
    <about:debugging#/runtime/this-firefox> and from
    Chrome: <chrome://extensions/>.
-3. Package with `package_mozilla` and `package_chrome`.
+3. Package with `tools/package`.
 4. Distribute for Mozilla
   <https://extensionworkshop.com/documentation/publish/package-your-extension/>
   and for Chrome <https://developer.chrome.com/docs/webstore/publish/>.
