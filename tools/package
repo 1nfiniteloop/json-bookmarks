@@ -9,4 +9,4 @@ mkdir --parents out/ \
     --filesync \
     out/${ext_name}-${ext_version}.zip \
     * \
-    --exclude .git tools/\* icon/src/\* out/\* TODO.md
+    --exclude .git icon/src/\* out/\* TODO.md
