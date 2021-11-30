@@ -1,16 +1,14 @@
 # Json Bookmarks
 
-This web extension exports and imports bookmarks in a json formatted file.
-The reason I built this extensioin was to support the use cases:
+This add-on exports and imports bookmarks with a json formatted file for:
 
-* Backup bookmaks in a simple format, possible to read raw and easily stored in
-  a git repository.
-* Sync bookmarks between browsers offline.
-* Export and import subset of bookmarks as different files.
+* Easily share bookmarks between each other using a simple file.
+* Store bookmarks in a simple readable file format, example in a git repository.
+* Sync bookmarks between Chrome & Firefox.
 
-The extension is ported and compatible with chrome browsers with help of
-Mozilla'a official polyfill, see more @
-<https://github.com/mozilla/webextension-polyfill>.
+The add-on is published for Firefox here:
+<https://addons.mozilla.org/en-US/firefox/addon/json-bookmarks/>. The add-on
+works for Chrome also but is not yet published on Chrome Web Store.
 
 ## Format
 
@@ -31,8 +29,8 @@ with Chrome:
 
 1. Install third party libraries with `tools/install_third_party`.
 2. Load the extension locally from Mozilla Firefox:
-   <about:debugging#/runtime/this-firefox> and from
-   Chrome: <chrome://extensions/>.
+   `about:debugging#/runtime/this-firefox` and from
+   Chrome: `chrome://extensions/`.
 3. Package with `tools/package`.
 4. Distribute for Mozilla
   <https://extensionworkshop.com/documentation/publish/package-your-extension/>
