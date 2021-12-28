@@ -54,3 +54,8 @@
   content: "\2611";
   color: green;
 }
+
+/* Workaround for weird checkbox symbol in Chrome, originates from last style "Noto Color Emoji" */
+:root{
+  --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
