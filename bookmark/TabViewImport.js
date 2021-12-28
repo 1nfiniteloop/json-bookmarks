@@ -1,5 +1,6 @@
 import { BookmarkFile } from "./BookmarkFile.js";
 import { BookmarkFormatterV1 } from "./BookmarkFormatterV1.js";
+import { BookmarkFormatterV2 } from "./BookmarkFormatterV2.js";
 import { BookmarkImporter } from "./BookmarkImporter.js";
 import { BookmarkTreeImport } from "./BookmarkTreeImport.js";
 
@@ -59,12 +60,18 @@ export class TabViewImport
   #getLoadedBookmarks()
   {
     const version = this.#fileReader.getVersion();
-    let formatter = new BookmarkFormatterV1();
-    const requiredVersion = formatter.getVersion();
-    if (version != requiredVersion)
+    const formatter = {
+      "1": new BookmarkFormatterV1(),
+      "2": new BookmarkFormatterV2(),
+    };
+    if (version in formatter)
     {
-      throw `File has version: ${version} but supported version is: ${requiredVersion}`
+      return formatter[version].read(this.#fileReader.getBookmarks());
     }
-    return formatter.read(this.#fileReader.getBookmarks());
+    else
+    {
+      let versions = Object.keys(formatter).join(",");
+      throw `Supported version(s): ${versions} but chosen file has version: ${version}`;
+    }
   }
 }

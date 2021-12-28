@@ -12,18 +12,13 @@ works for Chrome also but is not yet published on Chrome Web Store.
 
 ## Format
 
-Chrome and Firefox uses different names for the built-in bookmarks root folders:
+Chrome and Firefox uses different names for the built-in bookmarks root folders.
+The bookmarks file format handles this by:
 
-* Mozilla Firefox uses folder __"Bookmarks Toolbar"__ while Chrome uses
-  __"Bookmarks bar"__.
-* Mozilla Firefox uses folder __"Bookmarks Menu"__  while Chrome uses
-  __"Other bookmarks"__.
-
-This command can be used to adjust paths from Mozilla Firefox to be compatible
-with Chrome:
-
-    sed -r 's|"path": "/Bookmarks Toolbar(.*)"$|"path": "/Bookmarks bar\1"|g; s|"path": "/Bookmarks Menu(.*)"$|"path": "/Other bookmarks\1"|g' \
-      bookmarks-mozilla.json > bookmarks-chrome.json
+* Substituting __"Bookmarks Toolbar"__ in Mozilla Firefox and __"Bookmarks bar"__ in Chrome
+  with `${BOOKMARKS_BAR}`.
+* Substituting __"Bookmarks Menu"__ in Mozilla Firefox and __"Other bookmarks"__ in Chrome
+  with `${BOOKMARKS_MENU}`.
 
 ## Build and develop
 
