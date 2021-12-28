@@ -39,21 +39,35 @@ export class BookmarkTreeExport
     }
   }
 
-  // TODO: ignore empty folders and horizontal lines
   #walkTree(bookmark)
   {
-    let listItem = this.#tree.createListItem(
-      bookmark.title,
-      bookmark.id);
-    if (bookmark.children)
+    let listItem = null;
+    if (this.#isExportableNode(bookmark))
     {
-      let children = document.createElement("ul");
-      for (let child of bookmark.children)
+      listItem = this.#tree.createListItem(
+        bookmark.title,
+        bookmark.id);
+      if (bookmark.children)
       {
-        children.appendChild(this.#walkTree(child));
+        let children = document.createElement("ul");
+        for (let child of bookmark.children)
+        {
+          let childNode = this.#walkTree(child);
+          if (childNode)
+          {
+            children.appendChild(childNode);
+          }
+        }
+        listItem.appendChild(children);
       }
-      listItem.appendChild(children);
     }
     return listItem;
+  }
+
+  // Ignore empty folders and horizontal lines. Note that root node has children
+  // but no title.
+  #isExportableNode(bookmark)
+  {
+    return bookmark.children || bookmark.title;
   }
 }
