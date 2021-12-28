@@ -1,5 +1,7 @@
 # Json Bookmarks
 
+![json-bookmarks](https://user-images.githubusercontent.com/31454564/147612138-4c9d6bb4-49d3-41ae-bed0-274a23d21c66.png)
+
 This add-on exports and imports bookmarks with a json formatted file for:
 
 * Easily share bookmarks between each other using a simple file.
