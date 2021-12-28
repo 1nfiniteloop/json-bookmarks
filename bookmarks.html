@@ -11,22 +11,29 @@
     <script type="module" src="bookmarks.js"></script>
   </head>
   <body>
-    <main style="padding: 20px;">
-      <h1><img src="icon/96.png">Json bookmarks</h1>
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <button class="nav-link" id="export-tab" data-bs-toggle="tab" data-bs-target="#export" type="button">Export</button>
-        </li>
-        <li class="nav-item">
-          <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">Import</button>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane fade tree" id="import">
-          <button id="btn-import" class="btn btn-primary">Import selected</button>
+    <main>
+      <div class="d-flex min-vh-100">
+        <div class="p-3 bg-dark text-white">
+          <h3><img src="icon/48.png">Json bookmarks</h3>
+          <hr>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" id="export-tab" data-bs-toggle="tab" data-bs-target="#export" type="button">Export</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">Import</a>
+            </li>
+          </ul>
         </div>
-        <div class="tab-pane fade tree" id="export">
-          <button id="btn-export" class="btn btn-primary">Export selected</button>
+        <div class="p-3">
+          <div class="tab-content">
+            <div class="tab-pane fade tree" id="import">
+              <button id="btn-import" class="btn btn-primary">Import selected</button>
+            </div>
+            <div class="tab-pane fade tree" id="export">
+              <button id="btn-export" class="btn btn-primary">Export selected</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>

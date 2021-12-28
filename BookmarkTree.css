@@ -19,14 +19,14 @@
 }
 
 .tree li::before {
- border-top: 1px solid #000;
+ border-top: 1px solid #ddd;
  top: 12px;
  width: 8px;
  height: 0;
 }
 
 .tree li::after {
- border-left: 1px solid #000;
+ border-left: 1px solid #ddd;
  height: 100%;
  width: 0px;
  top: 2px;
@@ -45,7 +45,7 @@
 
 .tree span::before {
   content: "\2610";
-  color: black;
+  color: #ddd;
   display: inline-block;
   margin-right: 6px;
 }
