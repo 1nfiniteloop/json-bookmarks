@@ -1,28 +1,21 @@
 export class BookmarkImporter
 {
-  #fileReader;
   #selection;
   #bookmarkTree;
   #cachedLeafNode = {};
-
-  setFileReader(fileReader)
-  {
-    this.#fileReader = fileReader;
-  }
 
   setSelection(selection)
   {
     this.#selection = selection;
   }
 
-  async import()
+  async import(bookmarks)
   {
-    const bookmarks = this.#fileReader.readContent();
     this.#bookmarkTree = await this.#getBookmarkTree();
     for (let i of this.#selection)
     {
-      const data = bookmarks[i];
-      await this.#tryImportBookmark(data.path, data.title, data.url)
+      const bookmark = bookmarks[i];
+      await this.#tryImportBookmark(bookmark.path, bookmark.title, bookmark.url)
     }
   }
 
@@ -67,16 +60,17 @@ export class BookmarkImporter
 
   async #getOrCreatePathCached(path)
   {
-    if (path in this.#cachedLeafNode)
+    const key = path.join("/");
+    if (key in this.#cachedLeafNode)
     {
       console.debug("Using cached path: " + path);
-      return this.#cachedLeafNode[path];
+      return this.#cachedLeafNode[key];
     }
     else
     {
       console.debug("Walking tree to find path: " + path);
       const folder = await this.#getOrCreatePath(path);
-      this.#cachedLeafNode[path] = folder;
+      this.#cachedLeafNode[key] = folder;
       return folder;
     }
   }
@@ -86,7 +80,7 @@ export class BookmarkImporter
     const index = 1; // skip first array element (which is empty)
     return await this.#walk(
       this.#bookmarkTree,
-      path.split("/"),
+      path,
       index);
   }
 

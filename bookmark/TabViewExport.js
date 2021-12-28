@@ -1,6 +1,7 @@
 import { BookmarkExporter } from "./BookmarkExporter.js";
 import { BookmarkTreeExport } from "./BookmarkTreeExport.js";
-import { BookmarkFileWriter } from "./BookmarkFileWriter.js";
+import { BookmarkFile } from "./BookmarkFile.js";
+import { BookmarkFormatterV1 } from "./BookmarkFormatterV1.js";
 
 export class TabViewExport
 {
@@ -43,10 +44,14 @@ export class TabViewExport
     if (this.#tree && this.#bookmarkTree)
     {
       const exporter = new BookmarkExporter();
-      exporter.setFileWriter(new BookmarkFileWriter());
       exporter.setBookmarkTree(this.#bookmarkTree)
       exporter.setSelection(this.#tree.getSelectedBookmarksId());
-      exporter.export();
+      let formatter = new BookmarkFormatterV1();
+      let bookmarks = formatter.write(exporter.export());
+      let fileWriter = new BookmarkFile();
+      fileWriter.setVersion(formatter.getVersion());
+      fileWriter.setBookmarks(bookmarks);
+      fileWriter.save();
     }
   }
 }

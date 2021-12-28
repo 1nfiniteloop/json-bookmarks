@@ -1,4 +1,5 @@
-import { BookmarkFileReader } from "./BookmarkFileReader.js";
+import { BookmarkFile } from "./BookmarkFile.js";
+import { BookmarkFormatterV1 } from "./BookmarkFormatterV1.js";
 import { BookmarkImporter } from "./BookmarkImporter.js";
 import { BookmarkTreeImport } from "./BookmarkTreeImport.js";
 
@@ -17,18 +18,18 @@ export class TabViewImport
   async onInit()
   {
     console.info("init view: import");
-    this.#fileReader = new BookmarkFileReader();
+    this.#fileReader = new BookmarkFile();
+    await this.#fileReader.load();
+    this.#tree = new BookmarkTreeImport();
+    this.#tree.setElementRoot(document.getElementById("import"));
     try
     {
-      await this.#fileReader.openFile();
+      this.#tree.setBookmarks(this.#getLoadedBookmarks());
     }
     catch(err)
     {
       alert(err);
     }
-    this.#tree = new BookmarkTreeImport();
-    this.#tree.setElementRoot(document.getElementById("import"));
-    this.#tree.setBookmarks(this.#fileReader.readContent());
     this.#tree.render();
   }
 
@@ -44,15 +45,26 @@ export class TabViewImport
   {
     const selectedBookmarks = this.#tree.getSelectedBookmarksId();
     const importer = new BookmarkImporter();
-    importer.setFileReader(this.#fileReader);
     importer.setSelection(selectedBookmarks);
     try
     {
-      await importer.import();
+      await importer.import(this.#getLoadedBookmarks());
     }
     catch(err)
     {
       alert(err);
     }
+  }
+
+  #getLoadedBookmarks()
+  {
+    const version = this.#fileReader.getVersion();
+    let formatter = new BookmarkFormatterV1();
+    const requiredVersion = formatter.getVersion();
+    if (version != requiredVersion)
+    {
+      throw `File has version: ${version} but supported version is: ${requiredVersion}`
+    }
+    return formatter.read(this.#fileReader.getBookmarks());
   }
 }

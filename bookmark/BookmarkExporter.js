@@ -1,8 +1,8 @@
+import { Bookmark } from "./Bookmark.js";
 
 export class BookmarkExporter
 {
   #bookmarkTree;
-  #fileWriter;
   #selection = new Set();
 
   setBookmarkTree(bookmarkTree)
@@ -15,16 +15,9 @@ export class BookmarkExporter
     this.#selection = selection;
   }
 
-  setFileWriter(fileWriter)
-  {
-    this.#fileWriter = fileWriter;
-  }
-
   export()
   {
-    this.#fileWriter.setBookmarks(
-        this.#getBookmarks());
-    this.#fileWriter.save();
+    return this.#getBookmarks();
   }
 
   #getBookmarks()
@@ -43,7 +36,10 @@ export class BookmarkExporter
     {
       if (this.#selection.has(bookmark.id))
       {
-        out.push(this.#fmtJson(bookmark, path));
+        out.push(new Bookmark(
+          bookmark.title,
+          bookmark.url,
+          Array.from(path)));
       }
     }
     if (bookmark.children)
@@ -54,15 +50,6 @@ export class BookmarkExporter
         this.#walkTree(child, path, out);
       }
       path.pop();
-    }
-  }
-
-  #fmtJson(bookmark, path)
-  {
-    return {
-      title: bookmark.title,
-      url: bookmark.url,
-      path: path.join("/")
     }
   }
 }

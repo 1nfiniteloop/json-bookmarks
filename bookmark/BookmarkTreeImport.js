@@ -44,22 +44,22 @@ export class BookmarkTreeImport
 
   #getOrCreatePathCached(path)
   {
-    if (path in this.#cachedPaths)
+    let key = path.join("/");
+    if (key in this.#cachedPaths)
     {
       console.debug("Using cached path: " + path);
-      return this.#cachedPaths[path];
+      return this.#cachedPaths[key];
     }
     else
     {
       let leafNode = this.#getOrCreatePath(path);
-      this.#cachedPaths[path] = leafNode;
+      this.#cachedPaths[key] = leafNode;
       return leafNode;
     }
   }
 
   #getOrCreatePath(path)
   {
-    let folderNames = path.split("/");
     console.debug("Parsing path: " + path);
     let root = this.#elementRoot.querySelector("ul");
     if (root == null)
@@ -67,15 +67,15 @@ export class BookmarkTreeImport
       root = document.createElement("ul");
       this.#elementRoot.appendChild(root);
     }
-    return this.#getTreeFromPath(root, folderNames);
+    return this.#getTreeFromPath(root, path);
   }
 
-  #getTreeFromPath(root, folderNames)
+  #getTreeFromPath(root, path)
   {
     let current = root;  // always "ul"
-    for (let folderName of folderNames)
+    for (let folderName of path)
     {
-      if (!folderName)   // special case for root
+      if (!folderName)   // special case for root.
       {
         folderName = "/";
       }
