@@ -6,6 +6,7 @@ import { BookmarkTreeImport } from "./BookmarkTreeImport.js";
 
 export class TabViewImport
 {
+  #containerId = "import";
   #fileReader;
   #tree;
 
@@ -34,7 +35,7 @@ export class TabViewImport
   {
     await this.#fileReader.load();
     this.#tree = new BookmarkTreeImport();
-    this.#tree.setElementRoot(document.getElementById("import"));
+    this.#tree.setElementRoot(document.getElementById(this.#containerId));
     this.#tree.setBookmarks(this.#getLoadedBookmarks());
     this.#tree.render();
   }
@@ -55,6 +56,10 @@ export class TabViewImport
     try
     {
       await importer.import(this.#getLoadedBookmarks());
+      const statistics = importer.getImportedStatistics();
+      this.#showImportedStatus(
+        statistics.newBookmarks,
+        statistics.existingBookmarks);
     }
     catch(err)
     {
@@ -78,5 +83,14 @@ export class TabViewImport
       let versions = Object.keys(formatter).join(",");
       throw `Supported version(s): ${versions} but chosen file has version: ${version}`;
     }
+  }
+
+  #showImportedStatus(newBookmarks, existingBookmarks)
+  {
+    const type = "success";
+    const message = `Imported ${newBookmarks} new bookmarks and ${existingBookmarks} already exists.`;
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = `<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+    document.getElementById(this.#containerId).prepend(wrapper);
   }
 }

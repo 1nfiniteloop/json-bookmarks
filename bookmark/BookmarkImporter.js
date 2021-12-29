@@ -3,14 +3,34 @@ export class BookmarkImporter
   #selection;
   #bookmarkTree;
   #cachedLeafNode = {};
+  #statistics;
+
+  constructor()
+  {
+    this.#statistics = this.#resetStatistics();
+  }
+
+  #resetStatistics()
+  {
+    this.#statistics = {
+      newBookmarks: 0,
+      existingBookmarks: 0,
+    };
+  }
 
   setSelection(selection)
   {
     this.#selection = selection;
   }
 
+  getImportedStatistics()
+  {
+    return this.#statistics;
+  }
+
   async import(bookmarks)
   {
+    this.#resetStatistics();
     this.#bookmarkTree = await this.#getBookmarkTree();
     for (let i of this.#selection)
     {
@@ -46,6 +66,7 @@ export class BookmarkImporter
     if (!bookmark)
     {
       console.debug("Create new bookmark: " + title);
+      ++this.#statistics.newBookmarks;
       bookmark = await browser.bookmarks.create({
         title: title,
         url: url,
@@ -54,6 +75,7 @@ export class BookmarkImporter
     }
     else
     {
+      ++this.#statistics.existingBookmarks;
       console.debug("No import, bookmark already exists: " + title);
     }
   }
