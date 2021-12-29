@@ -20,17 +20,22 @@ export class TabViewImport
   {
     console.info("init view: import");
     this.#fileReader = new BookmarkFile();
-    await this.#fileReader.load();
-    this.#tree = new BookmarkTreeImport();
-    this.#tree.setElementRoot(document.getElementById("import"));
     try
     {
-      this.#tree.setBookmarks(this.#getLoadedBookmarks());
+      await this.#tryInit();
     }
     catch(err)
     {
       alert(err);
     }
+  }
+
+  async #tryInit()
+  {
+    await this.#fileReader.load();
+    this.#tree = new BookmarkTreeImport();
+    this.#tree.setElementRoot(document.getElementById("import"));
+    this.#tree.setBookmarks(this.#getLoadedBookmarks());
     this.#tree.render();
   }
 
