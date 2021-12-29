@@ -1,7 +1,7 @@
 #!/bin/bash
 
 readonly ext_name="json-bookmarks"
-readonly ext_version="v2.0.0"
+readonly ext_version="v2.1.0"
 
 mkdir --parents out/ \
   && zip \
