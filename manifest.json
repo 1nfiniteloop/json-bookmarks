@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Json Bookmarks",
-  "version": "2.1.0",
+  "version": "${version}",
   "homepage_url": "https://github.com/1nfiniteloop/json-bookmarks",
   "description": "Import and export bookmarks between browsers with a json file",
   "permissions": ["bookmarks"],

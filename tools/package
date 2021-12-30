@@ -1,12 +1,28 @@
 #!/bin/bash
 
 readonly ext_name="json-bookmarks"
-readonly ext_version="v2.1.0"
 
-mkdir --parents out/ \
+get_version()
+{
+  git describe --tags --dirty
+}
+
+get_mainfest_version()
+{
+  local semver="$(git describe --tags --abbrev=0)"
+  echo "${semver#v}"
+}
+
+create_manifest()
+{
+  version="$(get_mainfest_version)" envsubst < manifest.json.in > manifest.json
+}
+
+create_manifest \
+  && mkdir --parents out/ \
   && zip \
     --recurse-paths \
     --filesync \
-    out/${ext_name}-${ext_version}.zip \
+    out/${ext_name}-$(get_version).zip \
     * \
-    --exclude .git icon/src/\* out/\* TODO.md
+    --exclude .git icon/src/\* out/\* TODO.md manifest.json.in
