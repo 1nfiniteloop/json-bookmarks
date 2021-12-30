@@ -8,9 +8,21 @@ This add-on exports and imports bookmarks with a json formatted file for:
 * Store bookmarks in a simple readable file format, example in a git repository.
 * Sync bookmarks between Chrome & Firefox.
 
+## Install
+
 The add-on is published for Firefox here:
-<https://addons.mozilla.org/en-US/firefox/addon/json-bookmarks/>. The add-on
-works for Chrome also but is not yet published on Chrome Web Store.
+<https://addons.mozilla.org/en-US/firefox/addon/json-bookmarks/>.
+
+The add-on also works for Chrome but is not yet published on Chrome Web Store.
+Thus, install from locally until further:
+
+1. Download latest release from
+   <https://github.com/1nfiniteloop/json-bookmarks/releases>.
+2. Unpack in any folder, example create
+   `<profile_path>/Extensions Local/json-bookmarks`, where your profile path
+   can be obtained from `chrome://version/`.
+3. Install locally from `chrome://extensions/` -> Toggle "Developer mode" ->
+   "Load unpacked".
 
 ## Format
 
