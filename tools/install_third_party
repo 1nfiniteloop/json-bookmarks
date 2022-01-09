@@ -14,6 +14,7 @@ __popd()
 
 __install_polyfill()
 {
+  # https://github.com/mozilla/webextension-polyfill/releases/tag/0.8.0
   echo "Installing browser polyfill"
   __pushd ${third_party} \
     && curl \
@@ -26,6 +27,7 @@ __install_polyfill()
 
 __install_filesaver()
 {
+  # https://github.com/eligrey/FileSaver.js/releases/tag/v2.0.4
   echo "Installing filesaver"
   curl \
     --silent \
@@ -36,6 +38,7 @@ __install_filesaver()
 
 __install_bootstrap()
 {
+  # https://github.com/twbs/bootstrap/releases/tag/v5.1.0
   echo "Installing bootstrap"
   __pushd ${third_party} \
     && curl \
