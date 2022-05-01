@@ -39,7 +39,7 @@ export class TabViewExport
     this.#bookmarkTree = null;
   }
 
-  #exportBookmarks()
+  async #exportBookmarks()
   {
     if (this.#tree && this.#bookmarkTree)
     {
@@ -47,6 +47,7 @@ export class TabViewExport
       exporter.setBookmarkTree(this.#bookmarkTree)
       exporter.setSelection(this.#tree.getSelectedBookmarksId());
       let formatter = new BookmarkFormatterV2();
+      await formatter.init();
       let bookmarks = formatter.write(exporter.export());
       let fileWriter = new BookmarkFile();
       fileWriter.setVersion(formatter.getVersion());

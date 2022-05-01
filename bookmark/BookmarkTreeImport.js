@@ -47,11 +47,12 @@ export class BookmarkTreeImport
     let key = path.join("/");
     if (key in this.#cachedPaths)
     {
-      console.debug("Using cached path: " + path);
+      console.debug(`Using cached path: ${key}`);
       return this.#cachedPaths[key];
     }
     else
     {
+      console.debug(`Parsing path: ${key}`);
       let leafNode = this.#getOrCreatePath(path);
       this.#cachedPaths[key] = leafNode;
       return leafNode;
@@ -60,7 +61,6 @@ export class BookmarkTreeImport
 
   #getOrCreatePath(path)
   {
-    console.debug("Parsing path: " + path);
     let root = this.#elementRoot.querySelector("ul");
     if (root == null)
     {

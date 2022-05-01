@@ -85,12 +85,12 @@ export class BookmarkImporter
     const key = path.join("/");
     if (key in this.#cachedLeafNode)
     {
-      console.debug("Using cached path: " + path);
+      console.debug(`Using cached path: ${key}`);
       return this.#cachedLeafNode[key];
     }
     else
     {
-      console.debug("Walking tree to find path: " + path);
+      console.debug(`Walking tree to find path: ${key}`);
       const folder = await this.#getOrCreatePath(path);
       this.#cachedLeafNode[key] = folder;
       return folder;

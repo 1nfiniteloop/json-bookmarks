@@ -36,7 +36,8 @@ export class TabViewImport
     await this.#fileReader.load();
     this.#tree = new BookmarkTreeImport();
     this.#tree.setElementRoot(document.getElementById(this.#containerId));
-    this.#tree.setBookmarks(this.#getLoadedBookmarks());
+    const loadedBookmarks = await this.#getLoadedBookmarks();
+    this.#tree.setBookmarks(loadedBookmarks);
     this.#tree.render();
   }
 
@@ -55,7 +56,8 @@ export class TabViewImport
     importer.setSelection(selectedBookmarks);
     try
     {
-      await importer.import(this.#getLoadedBookmarks());
+      const loadedBookmarks = await this.#getLoadedBookmarks();
+      await importer.import(loadedBookmarks);
       const statistics = importer.getImportedStatistics();
       this.#showImportedStatus(
         statistics.newBookmarks,
@@ -67,12 +69,12 @@ export class TabViewImport
     }
   }
 
-  #getLoadedBookmarks()
+  async #getLoadedBookmarks()
   {
     const version = this.#fileReader.getVersion();
     const formatter = {
       "1": new BookmarkFormatterV1(),
-      "2": new BookmarkFormatterV2(),
+      "2": await this.#newBookmarkFormatterV2(),
     };
     if (version in formatter)
     {
@@ -83,6 +85,13 @@ export class TabViewImport
       let versions = Object.keys(formatter).join(",");
       throw `Supported version(s): ${versions} but chosen file has version: ${version}`;
     }
+  }
+
+  async #newBookmarkFormatterV2()
+  {
+    const formatter = new BookmarkFormatterV2();
+    await formatter.init();
+    return formatter;
   }
 
   #showImportedStatus(newBookmarks, existingBookmarks)

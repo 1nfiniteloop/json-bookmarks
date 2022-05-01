@@ -1,38 +1,14 @@
 import { Bookmark } from "./Bookmark.js";
+import { BuiltinBookmark } from "./BuiltinBookmark.js";
 
 export class BookmarkFormatterV2
 {
-  #mapping = {
-    "Firefox": {
-      "Bookmarks Menu" : "${BOOKMARKS_MENU}",
-      "Bookmarks Toolbar": "${BOOKMARKS_BAR}"
-    },
-    "Chrome": {
-      "Other bookmarks" : "${BOOKMARKS_MENU}",
-      "Bookmarks bar": "${BOOKMARKS_BAR}",
-    }
-  };
-
-  #mappingIn = {};
-  #mappingOut = {};
-
+  #builtinBookmark = new BuiltinBookmark();
   #version = 2;
 
-  constructor()
+  async init()
   {
-    const mapping = this.#mapping[BROWSER_VENDOR];
-    this.#mappingOut = mapping;
-    this.#mappingIn = this.#reverseMappingOf(mapping);
-  }
-
-  #reverseMappingOf(mapping)
-  {
-    let reverse = {};
-    for (let key of Object.keys(mapping))
-    {
-      reverse[mapping[key]] = key;
-    }
-    return reverse;
+    await this.#builtinBookmark.init();
   }
 
   read(rawJson)
@@ -72,13 +48,11 @@ export class BookmarkFormatterV2
 
   #expandRootNodeIn(path)
   {
-    let key = path[1];
-    path[1] = this.#mappingIn[key];
+    path[1] = this.#builtinBookmark.expand(path[1]);
   }
 
   #substituteRootNodeIn(path)
   {
-    let key = path[1];
-    path[1] = this.#mappingOut[key];
+    path[1] = this.#builtinBookmark.substitute(path[1]);
   }
 }
