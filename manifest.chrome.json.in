@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Json Bookmarks",
+  "version": "${version}",
+  "homepage_url": "https://github.com/1nfiniteloop/json-bookmarks",
+  "description": "Import and export bookmarks between browsers with a json file",
+  "permissions": ["bookmarks"],
+  "action": {
+    "default_title": "JSON Bookmarks"
+  },
+  "icons": {
+    "16": "icon/16.png",
+    "32": "icon/32.png",
+    "48": "icon/48.png",
+    "96": "icon/96.png",
+    "128": "icon/128.png"
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  }
+}

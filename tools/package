@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ue
 
 readonly ext_name="json-bookmarks"
 
@@ -13,16 +14,30 @@ get_mainfest_version()
   echo "${semver#v}"
 }
 
-create_manifest()
+create_manifest_for()
 {
-  version="$(get_mainfest_version)" envsubst < manifest.json.in > manifest.json
+  browser_vendor="${1}"
+  version="$(get_mainfest_version)" envsubst < manifest.${browser_vendor}.json.in > manifest.json
 }
 
-create_manifest \
-  && mkdir --parents out/ \
-  && zip \
+create_package_for()
+{
+  browser_vendor="${1}"
+  create_manifest_for "${browser_vendor}"
+  mkdir --parents "out/"
+  zip \
     --recurse-paths \
     --filesync \
-    out/${ext_name}-$(get_version).zip \
-    * \
-    --exclude .git icon/src/\* out/\* TODO.md manifest.json.in
+    out/${ext_name}-${browser_vendor}-$(get_version).zip \
+    bookmark \
+    icon \
+    third_party \
+    *.js \
+    *.html \
+    *.css \
+    LICENSE \
+    manifest.json
+}
+
+create_package_for "mozilla"
+create_package_for "chrome"
