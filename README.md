@@ -2,27 +2,14 @@
 
 ![json-bookmarks](https://user-images.githubusercontent.com/31454564/147612138-4c9d6bb4-49d3-41ae-bed0-274a23d21c66.png)
 
-This add-on exports and imports bookmarks with a json formatted file for:
-
-* Easily share bookmarks between each other using a simple file.
-* Store bookmarks in a simple readable file format, example in a git repository.
-* Sync bookmarks between Chrome & Firefox.
+This add-on uses a simple json file format for exporting and importing bookmarks
+in Firefox and Chrome. This makes it easy to sync bookmarks offline between
+browsers, share subset of your bookmarks with others or backup in a git repository.
 
 ## Install
 
-The add-on is published for Firefox here:
-<https://addons.mozilla.org/en-US/firefox/addon/json-bookmarks/>.
-
-The add-on also works for Chrome but is not yet published on Chrome Web Store.
-Thus, install from locally until further:
-
-1. Download latest release from
-   <https://github.com/1nfiniteloop/json-bookmarks/releases>.
-2. Unpack in any folder, example create
-   `<profile_path>/Extensions Local/json-bookmarks`, where your profile path
-   can be obtained from `chrome://version/`.
-3. Install locally from `chrome://extensions/` -> Toggle "Developer mode" ->
-   "Load unpacked".
+* Firefox: <https://addons.mozilla.org/en-US/firefox/addon/json-bookmarks/>.
+* Chrome: <https://chromewebstore.google.com/detail/json-bookmarks/nalfimhmhafapgfcmajjjgeohmcnlfeh>
 
 ## Format
 
@@ -41,6 +28,5 @@ The bookmarks file format handles this by:
    `about:debugging#/runtime/this-firefox` and from
    Chrome: `chrome://extensions/`.
 3. Package with `tools/package`.
-4. Distribute for Mozilla
-  <https://extensionworkshop.com/documentation/publish/package-your-extension/>
-  and for Chrome <https://developer.chrome.com/docs/webstore/publish/>.
+4. Distribute for Mozilla <https://addons.mozilla.org> and for Chrome:
+   <https://chrome.google.com/webstore/devconsole>.
