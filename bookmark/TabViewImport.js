@@ -1,6 +1,7 @@
 import { BookmarkFile } from "./BookmarkFile.js";
 import { BookmarkFormatterV1 } from "./BookmarkFormatterV1.js";
 import { BookmarkFormatterV2 } from "./BookmarkFormatterV2.js";
+import { BookmarkFormatterV3 } from "./BookmarkFormatterV3.js";
 import { BookmarkImporter } from "./BookmarkImporter.js";
 import { BookmarkTreeImport } from "./BookmarkTreeImport.js";
 
@@ -75,6 +76,7 @@ export class TabViewImport
     const formatter = {
       "1": new BookmarkFormatterV1(),
       "2": await this.#newBookmarkFormatterV2(),
+      "3": await this.#newBookmarkFormatterV3(),
     };
     if (version in formatter)
     {
@@ -90,6 +92,13 @@ export class TabViewImport
   async #newBookmarkFormatterV2()
   {
     const formatter = new BookmarkFormatterV2();
+    await formatter.init();
+    return formatter;
+  }
+
+  async #newBookmarkFormatterV3()
+  {
+    const formatter = new BookmarkFormatterV3();
     await formatter.init();
     return formatter;
   }
