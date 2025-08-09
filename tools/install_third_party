@@ -53,7 +53,7 @@ __install_bootstrap()
 
 main()
 {
-  mkdir --parents ${third_party} \
+  mkdir -p ${third_party} \
     && __install_polyfill \
     && __install_filesaver \
     && __install_bootstrap \
