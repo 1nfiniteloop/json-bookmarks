@@ -17,8 +17,11 @@ export class BuiltinBookmark
     this.#createMappingFor(
       await this.#getBookmarkNameFrom(this.#getNodeIdForBookmarksBar()),
       "${BOOKMARKS_BAR}");
+
+    const nodeId = await this.#getNodeIdForBookmarksMenu()
+
     this.#createMappingFor(
-      await this.#getBookmarkNameFrom(this.#getNodeIdForBookmarksMenu()),
+      await this.#getBookmarkNameFrom(nodeId),
       "${BOOKMARKS_MENU}");
   }
 
@@ -68,7 +71,7 @@ export class BuiltinBookmark
     }
   }
 
-  #getNodeIdForBookmarksMenu()
+  async #getNodeIdForBookmarksMenu()
   {
     if (BROWSER_VENDOR == BROWSER_FIREFOX)
     {
@@ -76,11 +79,23 @@ export class BuiltinBookmark
     }
     else if (BROWSER_VENDOR == BROWSER_CHROME)
     {
-      return "2";
+      return this.#getChromeOtherBookmarksNodeId()
     }
     else
     {
       throw `Unsupported browser vendor: ${BROWSER_VENDOR}`;
+    }
+  }
+
+  async #getChromeOtherBookmarksNodeId()
+  {
+    const tree = await browser.bookmarks.getTree();
+    const otherBookmarks = tree[0].children.find(i => i.title === 'Other bookmarks')
+
+    if (otherBookmarks) {
+      return otherBookmarks.id
+    } else {
+      throw new Error('Could not find "Other bookmarks" id')
     }
   }
 }
