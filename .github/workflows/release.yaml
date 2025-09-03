@@ -15,7 +15,7 @@ jobs:
       # ref: https://github.com/actions/cache
       - name: Get cache for third party dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: third_party
           key: third-party-${{ hashFiles('tools/install_third_party') }}
