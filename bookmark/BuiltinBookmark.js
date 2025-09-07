@@ -89,13 +89,9 @@ export class BuiltinBookmark
 
   async #getChromeOtherBookmarksNodeId()
   {
-    const tree = await browser.bookmarks.getTree();
-    const otherBookmarks = tree[0].children.find(i => i.title === 'Other bookmarks')
+    const bookmarks = await browser.bookmarks.getTree();
+    const otherBookmarks = bookmarks[0].children.find(i => i.folderType === 'other')
 
-    if (otherBookmarks) {
-      return otherBookmarks.id
-    } else {
-      throw new Error('Could not find "Other bookmarks" id')
-    }
+    return otherBookmarks.id
   }
 }
