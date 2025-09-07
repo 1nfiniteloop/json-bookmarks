@@ -14,15 +14,17 @@ export class BuiltinBookmark
 
   async init()
   {
-    this.#createMappingFor(
-      await this.#getBookmarkNameFrom(this.#getNodeIdForBookmarksBar()),
-      "${BOOKMARKS_BAR}");
-
-    const nodeId = await this.#getNodeIdForBookmarksMenu()
+    const bookmarksBarNodeId = await this.#getNodeIdForBookmarksBar()
 
     this.#createMappingFor(
-      await this.#getBookmarkNameFrom(nodeId),
-      "${BOOKMARKS_MENU}");
+        await this.#getBookmarkNameFrom(bookmarksBarNodeId),
+        "${BOOKMARKS_BAR}");
+
+    const bookmarksMenuNodeId = await this.#getNodeIdForBookmarksMenu()
+
+    this.#createMappingFor(
+        await this.#getBookmarkNameFrom(bookmarksMenuNodeId),
+        "${BOOKMARKS_MENU}");
   }
 
   substitute(name)
@@ -55,7 +57,7 @@ export class BuiltinBookmark
     }
   }
 
-  #getNodeIdForBookmarksBar()
+  async #getNodeIdForBookmarksBar()
   {
     if (BROWSER_VENDOR == BROWSER_FIREFOX)
     {
@@ -63,7 +65,7 @@ export class BuiltinBookmark
     }
     else if (BROWSER_VENDOR == BROWSER_CHROME)
     {
-      return "1";
+      return this.#getChromeSpecialFolderId('bookmarks-bar')
     }
     else
     {
@@ -79,7 +81,7 @@ export class BuiltinBookmark
     }
     else if (BROWSER_VENDOR == BROWSER_CHROME)
     {
-      return this.#getChromeOtherBookmarksNodeId()
+      return this.#getChromeSpecialFolderId('other')
     }
     else
     {
@@ -87,10 +89,15 @@ export class BuiltinBookmark
     }
   }
 
-  async #getChromeOtherBookmarksNodeId()
+  /**
+   * Returns node id for special folders in Chrome.
+   * @param {('bookmarks-bar'|'managed'|'mobile'|'other')} folderType
+   * @returns {Promise<*>}
+   */
+  async #getChromeSpecialFolderId(folderType)
   {
     const bookmarks = await browser.bookmarks.getTree();
-    const otherBookmarks = bookmarks[0].children.find(i => i.folderType === 'other')
+    const otherBookmarks = bookmarks[0].children.find(i => i.folderType === folderType)
 
     return otherBookmarks.id
   }
