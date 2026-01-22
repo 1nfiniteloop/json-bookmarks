@@ -1,0 +1,4 @@
+// Global
+const BROWSER_FIREFOX = "mozilla";
+const BROWSER_CHROME = "chrome";
+var BROWSER_VENDOR = "${browser_vendor}";
