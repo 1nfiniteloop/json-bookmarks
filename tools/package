@@ -18,6 +18,7 @@ create_manifest_for()
 {
   browser_vendor="${1}"
   version="$(get_mainfest_version)" envsubst < manifest.${browser_vendor}.json.in > manifest.json
+  browser_vendor="${browser_vendor}" envsubst < bookmark/BrowserVendor.js.in > bookmark/BrowserVendor.js
 }
 
 create_package_for()
