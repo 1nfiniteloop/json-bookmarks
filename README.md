@@ -27,6 +27,6 @@ The bookmarks file format handles this by:
 2. Load the extension locally from Mozilla Firefox:
    `about:debugging#/runtime/this-firefox` and from
    Chrome: `chrome://extensions/`.
-3. Package with `tools/package`.
+3. Package with `tools/package chrome` and `tools/package mozilla`.
 4. Distribute for Mozilla <https://addons.mozilla.org> and for Chrome:
    <https://chrome.google.com/webstore/devconsole>.
