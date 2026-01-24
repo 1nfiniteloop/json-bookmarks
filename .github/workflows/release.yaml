@@ -24,8 +24,11 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: tools/install_third_party
 
-      - name: Build package
-        run: tools/package
+      - name: Build package for Mozilla
+        run: tools/package mozilla
+
+      - name: Build package for Chrom
+        run: tools/package chrome
 
         # ref: https://github.com/actions/upload-artifact
       - name: Upload build artifacts

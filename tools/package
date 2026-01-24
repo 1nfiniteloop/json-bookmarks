@@ -40,5 +40,9 @@ create_package_for()
     manifest.json
 }
 
-create_package_for "mozilla"
-create_package_for "chrome"
+if [[ ${#} -eq 1 && "${1}" =~ chrome|mozilla ]]; then
+  create_package_for "${1}"
+else
+  echo "ERROR: argument must be either \"chrome\" or \"mozilla\""
+  exit 1
+fi
